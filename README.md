@@ -13,7 +13,7 @@ This implementation uses an algorithm for determining target coordinates by five
 Download and build all projects from [**sources**](sources) folder.  
 Run sample console application ***RDM_CONSOLE.exe***.  
 
-```c#
+```console
 Target (Geodetic): 80, 20, 100
 
 Target (Cartesian): 1044169.258983, 380046.529794, 6259644.553094
