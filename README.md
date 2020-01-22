@@ -1,5 +1,6 @@
-<p align="center"><img width="40%" src="docs/rdm_logo_main.png" /></p>  
-**Range-difference method** implementation using C#.
+<p align="center"><img width="40%" src="docs/rdm_logo_main.png" /></p>   
+
+**Range-difference method** implementation using C#.   
 
 # Abstract
 One of the most common methods for determining the coordinates of a target in passive systems of positioning is the range-difference method. As a navigation parameter the range-difference method uses the difference of distances from the target to the spaced synchronized receivers determined by mutual time delay of the received signals.
