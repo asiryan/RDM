@@ -11,7 +11,9 @@ This implementation uses an algorithm for determining target coordinates by five
 
 # Code 
 Download and build all projects from [**sources**](sources) folder.  
-Run sample console application ***RDM_CONSOLE.exe***.  
+
+## Console application
+Run ***RDM_CONSOLE.exe***  
 
 ```
 Target (Geodetic): 80, 20, 100
@@ -32,6 +34,17 @@ Loss: 8.61359438577255E-06
 
 RDM (Geodetic): 80, 20, 99.999986
 ```
+
+## Windows.Forms application
+Run ***RDM_VISUAL***, apply settings press **Generate**  
+
+<p align="center"><img width="80%" src="docs/rdm_visual.png" /></p>   
+<p align="center"><b>Figure 3.</b> RDM_VISUAL</p>   
+
+Double click on the graph pane and save the image  
+
+<p align="center"><img width="80%" src="docs/graph.png" /></p>   
+<p align="center"><b>Figure 4.</b> Saved graph pane</p>   
 
 # License
 **GNU GPL v3.0**  
