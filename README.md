@@ -8,7 +8,7 @@ This implementation uses an algorithm for determining target coordinates by five
 
 <p align="center"><img width="40%" src="docs/satellites.png" /></p>   
 
-<p align="center">"<b>Figure 1.<b/> Multiposition Satellite System</p>   
+<p align="center"><b>Figure 1.<b/> Multiposition Satellite System</p>   
 
 
 # Code
