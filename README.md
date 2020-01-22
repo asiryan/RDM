@@ -13,7 +13,7 @@ This implementation uses an algorithm for determining target coordinates by five
 # Code
 
 # Visualization
-<p align="left"><img width="80%" src="docs/rdm_visual.png" /></p>   
+<p align="left"><img width="100%" src="docs/rdm_visual.png" /></p>   
 <p align="left"><b>Figure 2.</b> RDM_VISUAL</p>   
 
 
