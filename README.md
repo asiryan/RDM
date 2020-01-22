@@ -37,10 +37,10 @@ RDM (Geodetic): 80, 20, 99.999986
 
 ## Windows.Forms application
 Run ***RDM_VISUAL.exe***, apply settings and press "*Generate*" button.  
-Double click on the graph pane and save the image.  
+Double click on the graph and save the image.  
 
-<p align="center"><img width="50%" src="docs/graph.png" /></p>  
-<p align="center"><b>Figure 4.</b> Saved graph pane</p>  
+<p align="center"><img width="55%" src="docs/graph.png" /></p>  
+<p align="center"><b>Figure 4.</b> Saved graph image</p>  
 
 # License
 **GNU GPL v3.0**  
