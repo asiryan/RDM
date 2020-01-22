@@ -50,3 +50,4 @@ Double click on the graph and save the image.
 [2] **V.B. Burdin, V.A. Tyurin, S.A. Tyurin, V.M. Asiryan** - The estimation of target positioning by means of the range-difference method (***not available***).  
 [3] **E.P. Voroshilin, M.V. Mironov, V.A. Gromov** - The estimation of radio source positioning by means of the range-difference method using the multiposition passive satellite system ([***pdf***](https://cyberleninka.ru/article/n/opredelenie-koordinat-istochnikov-radioizlucheniya-raznostno-dalnomernym-metodom-s-ispolzovaniem-gruppirovki-nizkoorbitalnyh-malyh/pdf)).  
 [4] Coordinate system on **Wiki** ([***page***](https://en.wikipedia.org/wiki/Coordinate_system)).  
+[5] **ZedGraph** - class library, user control, and web control for .NET, written in C#, for drawing 2D Line, Bar, and Pie Charts ([***sourceforge***](https://sourceforge.net/projects/zedgraph/)).
