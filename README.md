@@ -1,4 +1,4 @@
-<p align="center"><img width="40%" src="docs/rdm_logo_main.png" /></p>
+<p align="center"><img width="40%" src="docs/rdm_logo_main.png" /></p>  
 **Range-difference method** implementation using C#.
 
 # Abstract
