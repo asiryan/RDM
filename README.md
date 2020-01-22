@@ -8,6 +8,8 @@ This implementation uses an algorithm for determining target coordinates by five
 
 <p align="center"><img width="40%" src="docs/satellites.png" /></p>   
 
+**Figure 1.** Multiposition Satellite System
+
 # Algorithm
 
 
