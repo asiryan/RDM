@@ -9,14 +9,14 @@ This implementation uses an algorithm for determining target coordinates by five
 <p align="center"><img width="40%" src="docs/satellites.png" /></p>   
 <p align="center"><b>Figure 1.</b> Multiposition Satellite System</p>   
 
+# Code 
 
-# Code
-
-# Visualization
-<p align="left"><img width="100%" src="docs/rdm_visual.png" /></p>   
-<p align="left"><b>Figure 2.</b> RDM_VISUAL</p>   
-
+# License
+**GNU GPL v3.0**  
 
 # References
-[1] I.V. Grin, R.A. Ershov, O.A. Morozov, V.R. Fidelman - EVALUATION OF RADIO SOURCE’S COORDINATES BASED ON SOLUTION OF LINEARIZED SYSTEM
-OF EQUATIONS BY RANGE-DIFFERENCE METHOD
+[1] I.V. Grin, R.A. Ershov, O.A. Morozov, V.R. Fidelman - Evaluation of radio source’s coordinates based on solution of linearized system
+of equations by range-difference method (pdf)[https://cyberleninka.ru/article/n/otsenka-koordinat-istochnika-radioizlucheniya-na-osnove-resheniya-linearizovannoy-sistemy-uravneniy-raznostno-dalnomernogo-metoda/pdf].
+[2] V.B. Burdin, V.A. Tyurin, S.A. Tyurin, V.M. Asiryan - The estimation of target positioning by means of the range-difference method.
+[3] E.P. Voroshilin, M.V. Mironov, V.A. Gromov - The estimation of radio source positioning by means of the range-difference method using the multiposition passive satellite system (pdf)[https://cyberleninka.ru/article/n/opredelenie-koordinat-istochnikov-radioizlucheniya-raznostno-dalnomernym-metodom-s-ispolzovaniem-gruppirovki-nizkoorbitalnyh-malyh/pdf].
+[4] Coordinate system on Wiki (page)[https://en.wikipedia.org/wiki/Coordinate_system].
