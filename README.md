@@ -1,4 +1,4 @@
-<p align="center"><img width="40%" src="docs/rdm_logo_main.png" /></p>   
+<p align="center"><img width="40%" src="docs/rdm_logo_main.png" /></p>  
 
 **Range-difference method** implementation using C#.   
 
@@ -6,8 +6,8 @@
 One of the most common methods for determining the coordinates of a target in passive systems of positioning is the range-difference method. As a navigation parameter the range-difference method uses the difference of distances from the target to the spaced synchronized receivers determined by mutual time delay of the received signals.  
 This implementation uses an algorithm for determining target coordinates by five time-synchronized receivers by solving a linearized system of equations [1].  
 
-<p align="center"><img width="40%" src="docs/satellites.png" /></p>   
-<p align="center"><b>Figure 1.</b> Multiposition Satellite System</p>   
+<p align="center"><img width="40%" src="docs/satellites.png" /></p>  
+<p align="center"><b>Figure 1.</b> Multiposition Satellite System</p>  
 
 # Code 
 Download and build all projects from [**sources**](sources) folder.  
@@ -36,11 +36,11 @@ RDM (Geodetic): 80, 20, 99.999986
 ```
 
 ## Windows.Forms application
-Run ***RDM_VISUAL.exe***, apply settings and press **Generate** button.  
+Run ***RDM_VISUAL.exe***, apply settings and press "*Generate*" button.  
 Double click on the graph pane and save the image.  
 
-<p align="center"><img width="60%" src="docs/graph.png" /></p>
-<p align="center"><b>Figure 4.</b> Saved graph pane</p>   
+<p align="center"><img width="50%" src="docs/graph.png" /></p>  
+<p align="center"><b>Figure 4.</b> Saved graph pane</p>  
 
 # License
 **GNU GPL v3.0**  
