@@ -4,7 +4,7 @@
 
 # Abstract
 One of the most common methods for determining the coordinates of a target in passive systems of positioning is the range-difference method (**RDM**). As a navigation parameter the RDM uses the difference of distances from the target to the spaced synchronized receivers determined by mutual time delay of the received signals.  
-The RDM for determining the target coordinates can be implemented for 5 (or more) time-synchronized receivers by solving a **linearized system of equations** [1] and for 2, 3 (for 1D, 2D coordinates) or 4 (for 3D coordinates) receivers by solving a **nonlinear system of equations** [2,3]. This implementation uses both algorithms and can finds the coordinates of the target for **4 or more receivers**.  
+The RDM for determining the target coordinates can be implemented for 5 (or more) time-synchronized receivers by solving a **linearized system of equations** [1] and for 2, 3 (for 1D, 2D coordinates) or 4 (for 3D coordinates) receivers by solving a **nonlinear system of equations** [2,3]. This implementation uses both algorithms and can finds the coordinates of the target for **2 or more receivers**.  
 
 <p align="center"><img width="50%" src="docs/satellites.png" /></p>  
 <p align="center"><b>Figure 1.</b> Multiposition Satellite System</p>  
