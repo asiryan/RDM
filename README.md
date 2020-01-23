@@ -3,7 +3,7 @@
 **Range-difference method** implementation using C#.   
 
 # Abstract
-One of the most common methods for determining the coordinates of a target in passive systems of positioning is the range-difference method. As a navigation parameter the range-difference method uses the difference of distances from the target to the spaced synchronized receivers determined by mutual time delay of the received signals.  
+One of the most common methods for determining the coordinates of a target in passive systems of positioning is the range-difference method (RDM). As a navigation parameter the range-difference method uses the difference of distances from the target to the spaced synchronized receivers determined by mutual time delay of the received signals.  
 This implementation uses an algorithm for determining target coordinates by five time-synchronized receivers by solving a **linearized system of equations** [1].  
 
 <p align="center"><img width="50%" src="docs/satellites.png" /></p>  
@@ -13,7 +13,7 @@ This implementation uses an algorithm for determining target coordinates by five
 Download and build all projects from [**sources**](sources) folder.  
 
 ## Console application
-It simulates the situation of receiving data from a map about the location of the target in **geodetic coordinates**. The coordinates  are transformed from geodesics to Cartesian, and five receivers are randomly placed in accordance with the scaling vector, and the time delays of the signal are calculated. The range-difference method is applied, and target coordinates and quality metrics are calculated. Finally, the the target coordinates are transformed back to geodesic coordinates.  
+It simulates the situation of receiving data from a map about the location of the target in **geodetic coordinates**. The coordinates  are transformed from geodesics to Cartesian, and five receivers are randomly placed in accordance with the scaling vector, and the time delays of the signal are calculated. The RDM is applied, and target coordinates and quality metrics are calculated. Finally, the the target coordinates are transformed back to geodesic coordinates.  
   
 Run ***RDM_CONSOLE.exe***  
 
@@ -38,7 +38,7 @@ RDM (Geodetic): 80, 20, 99.999986
 ```
 
 ## Windows.Forms application
-It simulates two models: random placement of receivers at a fixed location of the target and random placement of the target at fixed locations of the receivers. The coordinates of objects are visualized using [**ZedGraph**](https://sourceforge.net/projects/zedgraph/) and the range-difference method is applied.  
+It simulates two models: random placement of receivers at a fixed location of the target and random placement of the target at fixed locations of the receivers. The coordinates of objects are visualized using [**ZedGraph**](https://sourceforge.net/projects/zedgraph/) and the RDM is applied.  
 
 Run ***RDM_VISUAL.exe***, apply settings and press "*Generate*" button.  
 Double click on the graph and save the image.  
