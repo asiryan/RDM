@@ -1,0 +1,410 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RDM</name>
+    </assembly>
+    <members>
+        <member name="T:RDM.Coordinates">
+            <summary>
+            Uses for transformations in 3d coordinates.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.A">
+            <summary>
+            Major axis of an ellipsoid.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.Q">
+            <summary>
+            Ellipsoid scaling.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.E2">
+            <summary>
+            E^2.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.pi">
+            <summary>
+            Constant Pi.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.psi">
+            <summary>
+            Pi / 180.0.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.ksi">
+            <summary>
+            180.0 / Pi.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.eps">
+            <summary>
+            Epsilon.
+            </summary>
+        </member>
+        <member name="F:RDM.Coordinates.maxIterations">
+            <summary>
+            Maximum number of iterations.
+            </summary>
+        </member>
+        <member name="M:RDM.Coordinates.FromGeodetic(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Converts geodetic coordinates to Cartesian coordinates.
+            </summary>
+            <param name="B">Geodetic latitude</param>
+            <param name="L">Geodetic longitude</param>
+            <param name="H">Geodetic height</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.FromGeodetic(System.Double[],System.Boolean)">
+            <summary>
+            Converts geodetic coordinates to Cartesian coordinates.
+            </summary>
+            <param name="vector">Vector { geodetic latitude (B), geodetic longitude (L), geodetic height (H) }</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.ToGeodetic(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Converts Cartesian coordinates to geodetic coordinates.
+            </summary>
+            <param name="X">X-coordinate</param>
+            <param name="Y">Y-coordinate</param>
+            <param name="Z">Z-coordinate</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { geodetic latitude (B), geodetic longitude (L), geodetic height (H) }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.ToGeodetic(System.Double[],System.Boolean)">
+            <summary>
+            Converts Cartesian coordinates to geodetic coordinates.
+            </summary>
+            <param name="vector">Vector { X, Y, Z }</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { geodetic latitude (B), geodetic longitude (L), geodetic height (H) }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.ToCylindrical(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Converts cylindrical coordinates to Cartesian coordinates.
+            </summary>
+            <param name="X">X-coordinate</param>
+            <param name="Y">Y-coordinate</param>
+            <param name="Z">Z-coordinate</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { radial distance (ρ), azimuthal angle (φ), height (z) }</returns>
+            <returns></returns>
+        </member>
+        <member name="M:RDM.Coordinates.ToCylindrical(System.Double[],System.Boolean)">
+            <summary>
+            Converts cylindrical coordinates to Cartesian coordinates.
+            </summary>
+            <param name="vector">Vector { X, Y, Z }</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { radial distance (ρ), azimuthal angle (φ), height (z) }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.FromCylindrical(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Converts Cartesian coordinates to cylindrical coordinates.
+            </summary>
+            <param name="R">Radial distance (ρ)</param>
+            <param name="Phi">Azimuthal angle (φ)</param>
+            <param name="Z">Height (z)</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.FromCylindrical(System.Double[],System.Boolean)">
+            <summary>
+            Converts Cartesian coordinates to cylindrical coordinates.
+            </summary>
+            <param name="vector">Vector { radial distance (ρ), azimuthal angle (φ), height (z) }</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.ToSpherical(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Converts spherical coordinates to Cartesian coordinates.
+            </summary>
+            <param name="X">X-coordinate</param>
+            <param name="Y">Y-coordinate</param>
+            <param name="Z">Z-coordinate</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { radial distance (ρ), polar angle (θ), azimuthal angle (φ) }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.ToSpherical(System.Double[],System.Boolean)">
+            <summary>
+            Converts spherical coordinates to Cartesian coordinates.
+            </summary>
+            <param name="vector">Vector { X, Y, Z }</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { radial distance (ρ), polar angle (θ), azimuthal angle (φ) }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.FromSpherical(System.Double,System.Double,System.Double,System.Boolean)">
+            <summary>
+            Converts Cartesian coordinates to spherical coordinates.
+            </summary>
+            <param name="R">Radial distance (ρ)</param>
+            <param name="Thetta">Polar angle (θ)</param>
+            <param name="Phi">Azimuthal angle (φ)</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.FromSpherical(System.Double[],System.Boolean)">
+            <summary>
+            Converts Cartesian coordinates to spherical coordinates.
+            </summary>
+            <param name="vector">Vector { radial distance (ρ), polar angle (θ), azimuthal angle (φ) }</param>
+            <param name="radians">Radians or degrees</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Coordinates.U0(System.Double)">
+            <summary>
+            Heavyside function with zero point.
+            </summary>
+            <param name="x">Argument</param>
+            <returns>Function</returns>
+        </member>
+        <member name="M:RDM.Coordinates.Sgn(System.Double)">
+            <summary>
+            Sign function with zero point.
+            </summary>
+            <param name="x">Argument</param>
+            <returns>Function</returns>
+        </member>
+        <member name="T:RDM.RDMS">
+            <summary>
+            Defines range-differential method solver.
+            </summary>
+        </member>
+        <member name="F:RDM.RDMS.C">
+            <summary>
+            Speed of light.
+            </summary>
+        </member>
+        <member name="F:RDM.RDMS.eps">
+            <summary>
+            Epsilon (0, 1).
+            </summary>
+        </member>
+        <member name="F:RDM.RDMS.rand">
+            <summary>
+            Random generator.
+            </summary>
+        </member>
+        <member name="F:RDM.RDMS.maxIterations">
+            <summary>
+            Maximum value of iterations.
+            </summary>
+        </member>
+        <member name="M:RDM.RDMS.#ctor(System.Double)">
+            <summary>
+            Initializes range-differential method solver.
+            </summary>
+            <param name="eps">Epsilon (0, 1)</param>
+        </member>
+        <member name="P:RDM.RDMS.Eps">
+            <summary>
+            Gets or sets epsilon value (0, 1).
+            </summary>
+        </member>
+        <member name="M:RDM.RDMS.Solve(System.Double[][],System.Double[])">
+            <summary>
+            Solves the navigation problem by the range-difference method.
+            </summary>
+            <param name="receivers">Matrix of five receivers</param>
+            <param name="time">Vector of time</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.RDMS.RDM5(System.Double[][],System.Double[])">
+            <summary>
+            Solves the navigation problem by the range-difference method (linear method).
+            </summary>
+            <param name="A">Matrix of five receivers</param>
+            <param name="T">Vector of time</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.RDMS.RDM4(System.Double[][],System.Double[],System.Double)">
+            <summary>
+            Solves the navigation problem by the range-difference method (nonlinear method).
+            </summary>
+            <param name="A">Matrix</param>
+            <param name="T">Vector of time</param>
+            <returns>Vector { X, Y, Z }</returns>
+            <param name="eps">Epsilon (0, 1)</param>
+        </member>
+        <member name="M:RDM.RDMS.Convergence(System.Double[],System.Double)">
+            <summary>
+            Convergence.
+            </summary>
+            <param name="S">Addition vector</param>
+            <param name="eps">Epsilon (0, 1)</param>
+            <returns></returns>
+        </member>
+        <member name="M:RDM.RDMS.Left(System.Double[][],System.Double[],System.Double[])">
+            <summary>
+            Returns a matrix "A" of a system of linear algebraic equations: "Ax = b".
+            </summary>
+            <param name="A">Matrix of </param>
+            <param name="T">Vector of time</param>
+            <param name="Rk">Current solution</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:RDM.RDMS.Right(System.Double[][],System.Double[],System.Double[])">
+            <summary>
+            Returns a vector "b" of a system of linear algebraic equations: "Ax = b".
+            </summary>
+            <param name="A">Matrix of the multi-positioning of five receiving points</param>
+            <param name="T">Vector of time</param>
+            <param name="Rk">Current solution</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:RDM.RDMS.Left(System.Double[][],System.Double[])">
+            <summary>
+            Returns a matrix "A" of a system of linear algebraic equations: "Ax = b".
+            </summary>
+            <param name="A">Matrix of </param>
+            <param name="T">Vector of time</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:RDM.RDMS.Right(System.Double[][],System.Double[])">
+            <summary>
+            Returns a vector "b" of a system of linear algebraic equations: "Ax = b".
+            </summary>
+            <param name="A">Matrix of the multi-positioning of five receiving points</param>
+            <param name="T">Vector of time</param>
+            <returns>Vector</returns>
+        </member>
+        <member name="M:RDM.RDMS.GetReceivers(System.Double[],System.Double[],System.Double,System.Int32)">
+            <summary>
+            Returns a matrix of five receive points.
+            </summary>
+            <param name="vector">Vector { X, Y, Z }</param>
+            <param name="scaling">Scaling vector { X, Y, Z }</param>
+            <param name="sigma">Standard deviation</param>
+            <param name="count">Number of receivers (>3)</param>
+            <returns>Matrix</returns>
+        </member>
+        <member name="M:RDM.RDMS.GetTarget(System.Double[][],System.Double)">
+            <summary>
+            Returns a target vector.
+            </summary>
+            <param name="receivers">Matrix of five receivers</param>
+            <param name="sigma">Standard deviation</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.RDMS.GetTime(System.Double[],System.Double[])">
+            <summary>
+            Returns the propagation time of a wave between two points.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:RDM.RDMS.GetTime(System.Double[][],System.Double[])">
+            <summary>
+            Returns the propagation time of a wave between mtrix of five receivers and target vector.
+            </summary>
+            <param name="receivers">Matrix of five receivers</param>
+            <param name="vector">Vector { X, Y, Z }</param>
+            <returns>Vector { T0, T1, T2, T3 }</returns>
+        </member>
+        <member name="T:RDM.Vector">
+            <summary>
+            Uses for vector operations.
+            </summary>
+        </member>
+        <member name="M:RDM.Vector.Abs(System.Double[])">
+            <summary>
+            Returns vector module.
+            </summary>
+            <param name="vector">Vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:RDM.Vector.Add(System.Double[],System.Double[])">
+            <summary>
+            Returns summary of two vectors.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:RDM.Vector.Sub(System.Double[],System.Double[])">
+            <summary>
+            Returns difference of two vectors.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:RDM.Vector.Loss(System.Double[],System.Double[])">
+            <summary>
+            Returns loss function of two vectors.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:RDM.Vector.Accuracy(System.Double[],System.Double[])">
+            <summary>
+            Returns accuracy function of two vectors.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:RDM.Vector.Mean(System.Double[],System.Double[])">
+            <summary>
+            Returns mean vector of two vectors.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Vector.Distance(System.Double[],System.Double[])">
+            <summary>
+            Returns distance between two vectors.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
+        <member name="M:RDM.Vector.Distance(System.Double[][],System.Double[])">
+            <summary>
+            Returns distances between matrix and vector.
+            </summary>
+            <param name="A">Matrix</param>
+            <param name="vector">Vector { X, Y, Z }</param>
+            <returns>Vector { r0, r1, r2, r3 }</returns>
+        </member>
+        <member name="M:RDM.Vector.Solve(System.Double[][],System.Double[])">
+            <summary>
+            Returns a vector corresponding to the solution of a system of linear algebraic equations: "Ax = b".
+            </summary>
+            <param name="A">Square matrix</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
+        </member>
+        <member name="F:RDM.Vector.rand">
+            <summary>
+            Random generator.
+            </summary>
+        </member>
+        <member name="M:RDM.Vector.Random(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns random integer vector.
+            </summary>
+            <param name="length">Length</param>
+            <param name="min">Minimum value</param>
+            <param name="max">Maxmimum value</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Vector.Random(System.Int32)">
+            <summary>
+            Returns random double vector.
+            </summary>
+            <param name="length">Length</param>
+            <returns>Vector { X, Y, Z }</returns>
+        </member>
+    </members>
+</doc>
