@@ -28,7 +28,7 @@ Receiver: 1043464.7512, 380751.037577, 6258940.045311
 Receiver: 1044775.1401, 379440.648677, 6259038.671976
 Receiver: 1045569.491596, 381446.762407, 6258244.320481
 Receiver: 1046796.760423, 381360.280514, 6258330.802374
-Time: 5E-06, 4E-06, 4E-06, 8E-06, 1.1E-05
+Time delays: 5E-06, 4E-06, 4E-06, 8E-06, 1.1E-05
 RDM (Cartesian): 1044169.258986, 380046.529796, 6259644.553079
 
 Accuracy: 0.999999999997838
@@ -43,7 +43,7 @@ It simulates two models: random placement of receivers at a fixed location of th
 Run ***RDM_VISUAL.exe***, apply settings and press "*Generate*" button.  
 Double click on the graph and save the image.  
 
-<p align="center"><img width="55%" src="docs/graph.png" /></p>  
+<p align="center"><img width="60%" src="docs/graph.png" /></p>  
 <p align="center"><b>Figure 2.</b> Saved graph image</p>  
 
 # License
