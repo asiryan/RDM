@@ -10,7 +10,7 @@ The RDM for determining the target coordinates can be implemented for 5 (or more
 <p align="center"><b>Figure 1.</b> Multiposition Satellite System</p>  
 
 # Installation
-Download and add **RDM.dll** to your C# project.  
+Download from [**release**](release) folder and add **RDM.dll** to your C# project.  
 ```c#
 using RDM;
 ```
