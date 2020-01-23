@@ -38,6 +38,8 @@ RDM (Geodetic): 80, 20, 99.999986
 ```
 
 ## Windows.Forms application
+It simulates two models: random placement of receivers at a fixed location of the target and random placement of the target at fixed locations of the receivers. The coordinates of objects are visualized using [**ZedGraph**](https://sourceforge.net/projects/zedgraph/) and the range-difference method is applied.
+
 Run ***RDM_VISUAL.exe***, apply settings and press "*Generate*" button.  
 Double click on the graph and save the image.  
 
@@ -52,4 +54,3 @@ Double click on the graph and save the image.
 [2] **V.B. Burdin, V.A. Tyurin, S.A. Tyurin, V.M. Asiryan** - The estimation of target positioning by means of the range-difference method (***not available***).  
 [3] **E.P. Voroshilin, M.V. Mironov, V.A. Gromov** - The estimation of radio source positioning by means of the range-difference method using the multiposition passive satellite system ([***pdf***](https://cyberleninka.ru/article/n/opredelenie-koordinat-istochnikov-radioizlucheniya-raznostno-dalnomernym-metodom-s-ispolzovaniem-gruppirovki-nizkoorbitalnyh-malyh/pdf)).  
 [4] Coordinate system on **Wiki** ([***page***](https://en.wikipedia.org/wiki/Coordinate_system)).  
-[5] **ZedGraph** - class library, user control, and web control for .NET, written in C#, for drawing 2D Line, Bar, and Pie Charts ([***sourceforge***](https://sourceforge.net/projects/zedgraph/)).
