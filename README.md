@@ -11,6 +11,10 @@ This implementation uses an algorithm for determining target coordinates by five
 
 # Code 
 Download and build all projects from [**sources**](sources) folder.  
+Add RDM to your C# project.  
+```c#
+using RDM;
+```
 
 ## Console application
 It simulates the situation of receiving data from a map about the location of the target in **geodetic coordinates** [4]. The coordinates  are transformed from geodesics to Cartesian, and five receivers are randomly placed in accordance with the scaling vector, and the time delays of the signal are calculated. The **RDM** is applied, and target coordinates and quality metrics are calculated. Finally, the the target coordinates are transformed back to geodesic coordinates.  
