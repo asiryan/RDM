@@ -13,7 +13,7 @@ This implementation uses an algorithm for determining target coordinates by five
 Download and build all projects from [**sources**](sources) folder.  
 
 ## Console application
-This application simulates the situation of receiving data from a map about the location of the target in ***geodetic coordinates***. The coordinates of the target are transformed from geodesics to Cartesian coordinates, and five test receivers are randomly placed in accordance with the scaling vector, and the time delays of the signal arrival are calculated. The range-difference method is applied, and target coordinates and model quality metrics are calculated. Finally, the Cartesian coordinates of the target are transformed back to geodesics.  
+This application simulates the situation of receiving data from a map about the location of the target in **geodetic coordinates**. The coordinates of the target are transformed from geodesics to Cartesian coordinates, and five test receivers are randomly placed in accordance with the scaling vector, and the time delays of the signal arrival are calculated. The range-difference method is applied, and target coordinates and model quality metrics are calculated. Finally, the Cartesian coordinates of the target are transformed back to geodesics.  
   
 Run ***RDM_CONSOLE.exe***  
 
