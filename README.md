@@ -44,7 +44,7 @@ Run ***RDM_VISUAL.exe***, apply settings and press "*Generate*" button.
 Double click on the graph and save the image.  
 
 <p align="center"><img width="55%" src="docs/graph.png" /></p>  
-<p align="center"><b>Figure 4.</b> Saved graph image</p>  
+<p align="center"><b>Figure 2.</b> Saved graph image</p>  
 
 # License
 **GNU GPL v3.0**  
