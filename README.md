@@ -11,7 +11,7 @@ This implementation uses an algorithm for determining target coordinates by five
 
 # Code 
 Download and build all projects from [**sources**](sources) folder.  
-Add RDM to your C# project.  
+Add **RDM** to your C# project.  
 ```c#
 using RDM;
 ```
