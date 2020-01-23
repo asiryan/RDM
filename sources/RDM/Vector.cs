@@ -235,5 +235,46 @@ namespace RDM
             return x;
         }
         #endregion
+
+        #region Random
+        /// <summary>
+        /// Random generator.
+        /// </summary>
+        private static Random rand = new Random();
+        /// <summary>
+        /// Returns random integer vector.
+        /// </summary>
+        /// <param name="length">Length</param>
+        /// <param name="min">Minimum value</param>
+        /// <param name="max">Maxmimum value</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Random(int length, int min, int max)
+        {
+            double[] v = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                v[i] = rand.Next(min, max);
+            }
+
+            return v;
+        }
+        /// <summary>
+        /// Returns random double vector.
+        /// </summary>
+        /// <param name="length">Length</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Random(int length)
+        {
+            double[] v = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                v[i] = rand.NextDouble();
+            }
+
+            return v;
+        }
+        #endregion
     }
 }

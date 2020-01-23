@@ -17,11 +17,13 @@ namespace RDM_VISUAL
         PointPairList list = new PointPairList();
         LineItem curve;
         SaveFileDialog saveFileDialog = new SaveFileDialog();
+        RDMS rdm = new RDMS();
         double[]   V = new double[] { 2000, 1000, 8000 };
         double[]   S = new double[] { 1000, 1000, 1000 };
         double[][] A;
         double[]   R;
         double sigma = 0.5;
+        int count = 4;
         #endregion
 
         #region Form methods
@@ -59,19 +61,16 @@ namespace RDM_VISUAL
         private void Button1_Click(object sender, EventArgs e)
         {
             // parsing
-            try { sigma = double.Parse(textBox1.Text); }
-            catch { label4.Text = "Invalid value, sigma = " + Math.Round(sigma, 6); }
-
             // fix receivers or not
             if (!checkBox1.Checked || A == null)
             {
-                A = RDM5.GetReceivers(V, S, sigma);
+                A = RDMS.GetReceivers(V, S, sigma, count);
             }
             else
             {
-                V = RDM5.GetTarget(A, sigma);
+                V = RDMS.GetTarget(A, sigma);
             }
-            R = RDM5.Solve(A, RDM5.GetTime(A, V));
+            R = rdm.Solve(A, RDMS.GetTime(A, V));
             DrawGraph(A, V, R);
             DispSolution(A, V, R);
         }
@@ -82,6 +81,23 @@ namespace RDM_VISUAL
             {
                 this.pane.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
             }
+        }
+
+        private void TrackBar1_Scroll(object sender, EventArgs e)
+        {
+            count = trackBar1.Value;
+            label5.Text = trackBar1.Value.ToString();
+        }
+
+        private void TrackBar2_Scroll(object sender, EventArgs e)
+        {
+            sigma = trackBar2.Value / 100.0;
+            label6.Text = sigma.ToString();
+        }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            trackBar1.Enabled = !checkBox1.Checked;
         }
         #endregion
 
@@ -138,6 +154,7 @@ namespace RDM_VISUAL
         {
             richTextBox1.Text  = FormHelper.Disp(V, "Target: ");
             richTextBox1.Text += FormHelper.Disp(sigma, "Sigma: ");
+            richTextBox1.Text += FormHelper.Disp(count, "Receivers count: ");
             richTextBox1.Text += FormHelper.Disp(receivers, "Receiver: ");
             richTextBox1.Text += FormHelper.Disp(solution, "RDM: ");
             richTextBox1.Text += FormHelper.Disp(Vector.Accuracy(solution, target), "Accuracy: ");
