@@ -4,14 +4,14 @@
 
 # Abstract
 One of the most common methods for determining the coordinates of a target in passive systems of positioning is the range-difference method (**RDM**). As a navigation parameter the RDM uses the difference of distances from the target to the spaced synchronized receivers determined by mutual time delay of the received signals.  
-This implementation uses an algorithm for determining target coordinates by five time-synchronized receivers by solving a **linearized system of equations** [1]. But the RDM can be based on the placement of **four receivers** only [2,3].
+This implementation uses an algorithm for determining target coordinates by five time-synchronized receivers by solving a **linearized system of equations** [1], but the RDM can be based on the placement of **four receivers** only [2,3].
 
 <p align="center"><img width="50%" src="docs/satellites.png" /></p>  
 <p align="center"><b>Figure 1.</b> Multiposition Satellite System</p>  
 
 # Code 
 Download and build all projects from [**sources**](sources) folder.  
-Add **RDM** to your C# project.  
+Add **RDM.dll** to your C# project.  
 ```c#
 using RDM;
 ```
