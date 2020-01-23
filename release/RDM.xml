@@ -239,7 +239,7 @@
             </summary>
             <param name="S">Addition vector</param>
             <param name="eps">Epsilon (0, 1)</param>
-            <returns></returns>
+            <returns>Stop or not</returns>
         </member>
         <member name="M:RDM.RDMS.Left(System.Double[][],System.Double[],System.Double[])">
             <summary>
@@ -275,14 +275,14 @@
             <param name="T">Vector of time</param>
             <returns>Vector</returns>
         </member>
-        <member name="M:RDM.RDMS.GetReceivers(System.Double[],System.Double[],System.Double,System.Int32)">
+        <member name="M:RDM.RDMS.GetReceiver(System.Double[],System.Double[],System.Double,System.Int32)">
             <summary>
-            Returns a matrix of five receive points.
+            Returns a matrix of receive points.
             </summary>
             <param name="vector">Vector { X, Y, Z }</param>
             <param name="scaling">Scaling vector { X, Y, Z }</param>
             <param name="sigma">Standard deviation</param>
-            <param name="count">Number of receivers (>3)</param>
+            <param name="count">Number of receivers (>1)</param>
             <returns>Matrix</returns>
         </member>
         <member name="M:RDM.RDMS.GetTarget(System.Double[][],System.Double)">
@@ -353,6 +353,14 @@
             <param name="b">Second vector { X, Y, Z }</param>
             <returns>Value</returns>
         </member>
+        <member name="M:RDM.Vector.Similarity(System.Double[],System.Double[])">
+            <summary>
+            Returns similarity function of two vectors.
+            </summary>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="b">Second vector { X, Y, Z }</param>
+            <returns>Value</returns>
+        </member>
         <member name="M:RDM.Vector.Mean(System.Double[],System.Double[])">
             <summary>
             Returns mean vector of two vectors.
@@ -377,13 +385,13 @@
             <param name="vector">Vector { X, Y, Z }</param>
             <returns>Vector { r0, r1, r2, r3 }</returns>
         </member>
-        <member name="M:RDM.Vector.Solve(System.Double[][],System.Double[])">
+        <member name="M:RDM.Vector.Resize(System.Double[],System.Int32)">
             <summary>
-            Returns a vector corresponding to the solution of a system of linear algebraic equations: "Ax = b".
+            Resizes a vector.
             </summary>
-            <param name="A">Square matrix</param>
-            <param name="b">Array</param>
-            <returns>Array</returns>
+            <param name="a">First vector { X, Y, Z }</param>
+            <param name="length">Length</param>
+            <returns>Value</returns>
         </member>
         <member name="F:RDM.Vector.rand">
             <summary>
@@ -405,6 +413,14 @@
             </summary>
             <param name="length">Length</param>
             <returns>Vector { X, Y, Z }</returns>
+        </member>
+        <member name="M:RDM.Vector.Solve(System.Double[][],System.Double[])">
+            <summary>
+            Returns a vector corresponding to the solution of a system of linear algebraic equations: "Ax = b".
+            </summary>
+            <param name="A">Square matrix</param>
+            <param name="b">Array</param>
+            <returns>Array</returns>
         </member>
     </members>
 </doc>

@@ -64,7 +64,7 @@ namespace RDM
         }
         #endregion
 
-        #region Error/Loss functions
+        #region Error/Loss/similarity functions
         /// <summary>
         /// Returns loss function of two vectors.
         /// </summary>
@@ -78,10 +78,10 @@ namespace RDM
 
             for (int i = 0; i < length; i++)
             {
-                s += Math.Pow(a[i] - b[i], 2);
+                s += Math.Abs(a[i] - b[i]);
             }
 
-            return Math.Sqrt(s / length);
+            return s;
         }
         /// <summary>
         /// Returns accuracy function of two vectors.
@@ -97,6 +97,24 @@ namespace RDM
                 return 1.0 / c;
 
             return c;
+        }
+        /// <summary>
+        /// Returns similarity function of two vectors.
+        /// </summary>
+        /// <param name="a">First vector { X, Y, Z }</param>
+        /// <param name="b">Second vector { X, Y, Z }</param>
+        /// <returns>Value</returns>
+        public static double Similarity(double[] a, double[] b)
+        {
+            int length = a.Length;
+            double A = Vector.Abs(a);
+            double B = Vector.Abs(b);
+            double s = 0;
+
+            for (int i = 0; i < length; i++)
+                s += a[i] * b[i];
+
+            return s / (A * B);
         }
         #endregion
 
@@ -150,6 +168,66 @@ namespace RDM
             }
 
             return c;
+        }
+        #endregion
+
+        #region Resize function
+        /// <summary>
+        /// Resizes a vector.
+        /// </summary>
+        /// <param name="a">First vector { X, Y, Z }</param>
+        /// <param name="length">Length</param>
+        /// <returns>Value</returns>
+        public static double[] Resize(double[] a, int length)
+        {
+            int r0 = Math.Min(a.GetLength(0), length);
+            double[] c = new double[length];
+
+            for (int i = 0; i < r0; i++)
+                c[i] = a[i];
+
+            return c;
+        }
+        #endregion
+
+        #region Random function
+        /// <summary>
+        /// Random generator.
+        /// </summary>
+        private static Random rand = new Random();
+        /// <summary>
+        /// Returns random integer vector.
+        /// </summary>
+        /// <param name="length">Length</param>
+        /// <param name="min">Minimum value</param>
+        /// <param name="max">Maxmimum value</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Random(int length, int min, int max)
+        {
+            double[] v = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                v[i] = rand.Next(min, max);
+            }
+
+            return v;
+        }
+        /// <summary>
+        /// Returns random double vector.
+        /// </summary>
+        /// <param name="length">Length</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Random(int length)
+        {
+            double[] v = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                v[i] = rand.NextDouble();
+            }
+
+            return v;
         }
         #endregion
 
@@ -233,47 +311,6 @@ namespace RDM
             }
 
             return x;
-        }
-        #endregion
-
-        #region Random
-        /// <summary>
-        /// Random generator.
-        /// </summary>
-        private static Random rand = new Random();
-        /// <summary>
-        /// Returns random integer vector.
-        /// </summary>
-        /// <param name="length">Length</param>
-        /// <param name="min">Minimum value</param>
-        /// <param name="max">Maxmimum value</param>
-        /// <returns>Vector { X, Y, Z }</returns>
-        public static double[] Random(int length, int min, int max)
-        {
-            double[] v = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                v[i] = rand.Next(min, max);
-            }
-
-            return v;
-        }
-        /// <summary>
-        /// Returns random double vector.
-        /// </summary>
-        /// <param name="length">Length</param>
-        /// <returns>Vector { X, Y, Z }</returns>
-        public static double[] Random(int length)
-        {
-            double[] v = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                v[i] = rand.NextDouble();
-            }
-
-            return v;
         }
         #endregion
     }

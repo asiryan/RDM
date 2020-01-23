@@ -62,9 +62,9 @@ namespace RDM
         {
             int length = receivers.GetLength(0);
 
-            if (length <= 3)
-                throw new Exception("Number of receivers must be greater than 3");
-            else if (length == 4)
+            if (length < 2)
+                throw new Exception("Number of receivers must be greater than 1");
+            else if (length < 5)
                 return RDM4(receivers, time, this.eps);
             else if (length == 5)
                 return RDM5(receivers, time);
@@ -86,13 +86,40 @@ namespace RDM
         #endregion
 
         #region Solvers rdm4, rdm5
+        // **************************************************************
+        //                          ALGORITHMS
+        // **************************************************************
+        // * RDM implementation for 5 (or more) time-synchronized 
+        // receivers by solving a linearized system of equations [1].
+        // --------------------------------------------------------------
+        // * RDM implementation for 2, 3 and 4 time-synchronized 
+        // receivers by solving a nonlinear system of equations [2,3].
+        // 
+        // 
+        // **************************************************************
+        //                          REFERENCES
+        // **************************************************************
+        // [1] I.V. Grin, R.A. Ershov, O.A. Morozov, V.R. Fidelman - 
+        // "Evaluation of radio source’s coordinates based on solution 
+        // of linearized system of equations by range-difference method"
+        // --------------------------------------------------------------
+        // [2] V.B. Burdin, V.A. Tyurin, S.A. Tyurin, V.M. Asiryan - 
+        // "The estimation of target positioning by means of the 
+        // range-difference method"
+        // --------------------------------------------------------------
+        // [3] E.P. Voroshilin, M.V. Mironov, V.A. Gromov - 
+        // "The estimation of radio source positioning by means of the 
+        // range-difference method using the multiposition passive 
+        // satellite system"
+        // **************************************************************
+
         /// <summary>
         /// Solves the navigation problem by the range-difference method (linear method).
         /// </summary>
         /// <param name="A">Matrix of five receivers</param>
         /// <param name="T">Vector of time</param>
         /// <returns>Vector { X, Y, Z }</returns>
-        public static double[] RDM5(double[][] A, double[] T)
+        private static double[] RDM5(double[][] A, double[] T)
         {
             // Roots
             double[][] B = RDMS.Left(A, T);
@@ -112,13 +139,15 @@ namespace RDM
         private static double[] RDM4(double[][] A, double[] T, double eps = 1e-8)
         {
             // Params
-            double[] V = new double[4];
+            int count = A.GetLength(0);
+            double[] V = new double[count];
             double[][] B;
             double[] F, S;
 
             // Roots
             for (int i = 0; i < maxIterations; i++)
             {
+                // Ax = b
                 B = RDMS.Left(A, T, V);
                 F = RDMS.Right(A, T, V);
                 S = Vector.Solve(B, F);
@@ -130,20 +159,20 @@ namespace RDM
             }
 
             // Vector { X, Y, Z }
-            return new double[] { V[0], V[1], V[2] };
+            return Vector.Resize(V, 3);
         }
         /// <summary>
         /// Convergence.
         /// </summary>
         /// <param name="S">Addition vector</param>
         /// <param name="eps">Epsilon (0, 1)</param>
-        /// <returns></returns>
+        /// <returns>Stop or not</returns>
         private static bool Convergence(double[] S, double eps = 1e-8)
         {
             int length = S.Length;
             bool b = true;
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < length - 1; i++)
             {
                 if (Math.Abs(S[i]) > eps)
                 {
@@ -165,22 +194,40 @@ namespace RDM
         /// <returns>Matrix</returns>
         private static double[][] Left(double[][] A, double[] T, double[] Rk)
         {
+            int count = A.GetLength(0);
+            double[][] R = new double[count][];
+            double[][] H = new double[count][];
+
             // decompose
-            double[] R0 = A[0];
-            double[] R1 = A[1];
-            double[] R2 = A[2];
-            double[] R3 = A[3];
+            for (int i = 0; i < count; i++)
+            {
+                R[i] = Vector.Resize(A[i], count - 1);
+            }
 
             // distance
-            double rk = Vector.Distance(R0, Rk);
+            double rk = Vector.Distance(R[0], Rk);
 
-            // vectors
-            double[] H1 = new double[] { R1[0] - R0[0], R1[1] - R0[1], R1[2] - R0[2], RDMS.C * (T[1] - T[0]) };
-            double[] H2 = new double[] { R2[0] - R0[0], R2[1] - R0[1], R2[2] - R0[2], RDMS.C * (T[2] - T[0]) };
-            double[] H3 = new double[] { R3[0] - R0[0], R3[1] - R0[1], R3[2] - R0[2], RDMS.C * (T[3] - T[0]) };
-            double[] H4 = new double[] { (R0[0] - Rk[0]) / rk, (R0[1] - Rk[1]) / rk, (R0[2] - Rk[2]) / rk, 1 };
+            // compute matrix
+            for (int i = 0; i < count - 1; i++)
+            {
+                H[i] = new double[count];
 
-            return new double[][] { H1, H2, H3, H4 };
+                for (int j = 0; j < count - 1; j++)
+                {
+                    H[i][j] = R[i + 1][j] - R[0][j];
+                }
+
+                H[i][count - 1] = RDMS.C * (T[i + 1] - T[0]);
+            }
+
+            H[count - 1] = new double[count];
+
+            for (int i = 0; i < count - 1; i++)
+            {
+                H[count - 1][i] = (R[0][i] - Rk[i]) / rk;
+            }
+            H[count - 1][count - 1] = 1.0;
+            return H;
         }
         /// <summary>
         /// Returns a vector "b" of a system of linear algebraic equations: "Ax = b".
@@ -191,33 +238,49 @@ namespace RDM
         /// <returns>Vector</returns>
         private static double[] Right(double[][] A, double[] T, double[] Rk)
         {
-            // decompose
-            double[] R0 = A[0];
-            double[] R1 = A[1];
-            double[] R2 = A[2];
-            double[] R3 = A[3];
+            int count = A.GetLength(0);
+            double[][] R = new double[count][];
+            double[]   P = new double[count];
 
-            // modules
-            double P0 = Math.Pow(Vector.Abs(R0), 2);
-            double P1 = Math.Pow(Vector.Abs(R1), 2);
-            double P2 = Math.Pow(Vector.Abs(R2), 2);
-            double P3 = Math.Pow(Vector.Abs(R3), 2);
+            // decompose
+            for (int i = 0; i < count; i++)
+            {
+                R[i] = Vector.Resize(A[i], count - 1);
+                P[i] = Math.Pow(Vector.Abs(R[i]), 2);
+            }
 
             // time delays
-            double T0 = RDMS.C * (T[1] - T[0]);
-            double T1 = RDMS.C * (T[2] - T[0]);
-            double T2 = RDMS.C * (T[3] - T[0]);
+            double[] dT = new double[count - 1];
+
+            for (int i = 0; i < count - 1; i++)
+            {
+                dT[i] = RDMS.C * (T[i + 1] - T[0]);
+            }
 
             // distance
-            double rk = Vector.Distance(R0, Rk);
+            double rk = Vector.Distance(R[0], Rk);
 
             // vectors
-            double F0 = Rk[0] * (R1[0] - R0[0]) + Rk[1] * (R1[1] - R0[1]) + Rk[2] * (R1[2] - R0[2]) - 0.5 * (P1 - P0 - T0 * T0) + T0 * rk;
-            double F1 = Rk[0] * (R2[0] - R0[0]) + Rk[1] * (R2[1] - R0[1]) + Rk[2] * (R2[2] - R0[2]) - 0.5 * (P2 - P0 - T1 * T1) + T1 * rk;
-            double F2 = Rk[0] * (R3[0] - R0[0]) + Rk[1] * (R3[1] - R0[1]) + Rk[2] * (R3[2] - R0[2]) - 0.5 * (P3 - P0 - T2 * T2) + T2 * rk;
-            double F3 = 1.0 / rk;
+            double[] F = new double[count];
+            double dF;
+            double dP;
 
-            return new double[] { -F0, -F1, -F2, -F3 };
+            // compute vector
+            for (int i = 0; i < count - 1; i++)
+            {
+                dF = 0;
+
+                for (int j = 0; j < count - 1; j++)
+                {
+                    dF += Rk[j] * (R[i + 1][j] - R[0][j]);
+                }
+
+                dP = -0.5 * (P[i + 1] - P[0] - dT[i] * dT[i]) + dT[i] * rk;
+                F[i] = -(dF + dP);
+            }
+
+            F[count - 1] = -1.0 / rk;
+            return F;
         }
         /// <summary>
         /// Returns a matrix "A" of a system of linear algebraic equations: "Ax = b".
@@ -228,19 +291,26 @@ namespace RDM
         private static double[][] Left(double[][] A, double[] T)
         {
             // decompose
-            double[] R0 = A[0];
-            double[] R1 = A[1];
-            double[] R2 = A[2];
-            double[] R3 = A[3];
-            double[] R4 = A[4];
+            int count = A.GetLength(0);
+            double[][] R = new double[count][];
+            double[][] H = new double[count - 1][];
 
-            // vectors
-            double[] H1 = new double[] { R0[0] - R1[0], R0[1] - R1[1], R0[2] - R1[2], -RDMS.C * (T[0] - T[1]) };
-            double[] H2 = new double[] { R0[0] - R2[0], R0[1] - R2[1], R0[2] - R2[2], -RDMS.C * (T[0] - T[2]) };
-            double[] H3 = new double[] { R0[0] - R3[0], R0[1] - R3[1], R0[2] - R3[2], -RDMS.C * (T[0] - T[3]) };
-            double[] H4 = new double[] { R0[0] - R4[0], R0[1] - R4[1], R0[2] - R4[2], -RDMS.C * (T[0] - T[4]) };
+            for (int i = 0; i < count; i++)
+                R[i] = A[i];
 
-            return new double[][] { H1, H2, H3, H4 };
+            // compute matrix
+            for (int i = 0; i < count - 1; i++)
+            {
+                H[i] = new double[count - 1];
+
+                for (int j = 0; j < count - 2; j++)
+                {
+                    H[i][j] = R[0][j] - R[i + 1][j];
+                }
+
+                H[i][count - 2] = -RDMS.C * (T[0] - T[i + 1]);
+            }
+            return H;
         }
         /// <summary>
         /// Returns a vector "b" of a system of linear algebraic equations: "Ax = b".
@@ -251,45 +321,44 @@ namespace RDM
         private static double[] Right(double[][] A, double[] T)
         {
             // decompose
-            double[] R0 = A[0];
-            double[] R1 = A[1];
-            double[] R2 = A[2];
-            double[] R3 = A[3];
-            double[] R4 = A[4];
+            int count = A.GetLength(0);
+            double[][] R = new double[count][];
+            double[][] H = new double[count - 1][];
+            double[]   P = new double[count];
+            double[]  dT = new double[count - 1];
+            double[]   F = new double[count - 1];
+            
+            for (int i = 0; i < count; i++)
+            {
+                R[i] = A[i];
+                P[i] = Vector.Abs(R[i]);
+            }
 
-            // modules
-            double P0 = Vector.Abs(R0);
-            double P1 = Vector.Abs(R1);
-            double P2 = Vector.Abs(R2);
-            double P3 = Vector.Abs(R3);
-            double P4 = Vector.Abs(R4);
+            // compute matrix
+            for (int i = 0; i < count - 1; i++)
+            {
+                dT[i] = RDMS.C * (T[i + 1] - T[0]);
+            }
 
-            // time delays
-            double T0 = RDMS.C * (T[1] - T[0]);
-            double T1 = RDMS.C * (T[2] - T[0]);
-            double T2 = RDMS.C * (T[3] - T[0]);
-            double T3 = RDMS.C * (T[4] - T[0]);
+            for (int i = 0; i < count - 1; i++)
+            {
+                F[i] = 0.5 * (P[0] * P[0] - P[i + 1] * P[i + 1] + dT[i] * dT[i]);
+            }
 
-            // vector
-            double F0 = P0 * P0 - P1 * P1 + T0 * T0;
-            double F1 = P0 * P0 - P2 * P2 + T1 * T1;
-            double F2 = P0 * P0 - P3 * P3 + T2 * T2;
-            double F3 = P0 * P0 - P4 * P4 + T3 * T3;
-
-            return new double[] { F0 / 2, F1 / 2, F2 / 2, F3 / 2 };
+            return F;
         }
         #endregion
 
         #region Generative methods
         /// <summary>
-        /// Returns a matrix of five receive points.
+        /// Returns a matrix of receive points.
         /// </summary>
         /// <param name="vector">Vector { X, Y, Z }</param>
         /// <param name="scaling">Scaling vector { X, Y, Z }</param>
         /// <param name="sigma">Standard deviation</param>
-        /// <param name="count">Number of receivers (>3)</param>
+        /// <param name="count">Number of receivers (>1)</param>
         /// <returns>Matrix</returns>
-        public static double[][] GetReceivers(double[] vector, double[] scaling, double sigma = 0.5, int count = 5)
+        public static double[][] GetReceiver(double[] vector, double[] scaling, double sigma = 0.5, int count = 5)
         {
             // params
             double X = vector[0];
@@ -300,6 +369,7 @@ namespace RDM
             double dy = scaling[1];
             double dz = scaling[2];
 
+            // compute
             double[][] R = new double[count][];
             double r0;
             double r1;

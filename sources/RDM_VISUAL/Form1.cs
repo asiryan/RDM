@@ -64,7 +64,7 @@ namespace RDM_VISUAL
             // fix receivers or not
             if (!checkBox1.Checked || A == null)
             {
-                A = RDMS.GetReceivers(V, S, sigma, count);
+                A = RDMS.GetReceiver(V, S, sigma, count);
             }
             else
             {
@@ -158,6 +158,7 @@ namespace RDM_VISUAL
             richTextBox1.Text += FormHelper.Disp(receivers, "Receiver: ");
             richTextBox1.Text += FormHelper.Disp(solution, "RDM: ");
             richTextBox1.Text += FormHelper.Disp(Vector.Accuracy(solution, target), "Accuracy: ");
+            richTextBox1.Text += FormHelper.Disp(Vector.Similarity(solution, target), "Similarity: ");
             richTextBox1.Text += FormHelper.Disp(Vector.Loss(solution, target), "Loss: ", "");
         }
         #endregion
