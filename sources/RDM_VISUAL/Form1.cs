@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace RDM_VISUAL
         GraphPane pane;
         PointPairList list = new PointPairList();
         LineItem curve;
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
         double[]   V = new double[] { 2000, 1000, 8000 };
         double[]   S = new double[] { 1000, 1000, 1000 };
         double[][] A;
@@ -26,6 +28,7 @@ namespace RDM_VISUAL
         public Form1()
         {
             InitializeComponent();
+            z1.MouseDoubleClick += Z1_MouseDoubleClick;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -46,6 +49,11 @@ namespace RDM_VISUAL
             pane.Title = "Range-difference method visualization";
             pane.XAxis.Title = "Coordinate X, m";
             pane.YAxis.Title = "Coordinate Y, m";
+
+            // Save file dialog
+            saveFileDialog.Filter = "PNG (*.png)|*.png";
+            saveFileDialog.FilterIndex = 0;
+            saveFileDialog.RestoreDirectory = true;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -67,6 +75,14 @@ namespace RDM_VISUAL
             DrawGraph(A, V, R);
             DispSolution(A, V, R);
         }
+
+        private void Z1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (DialogResult.OK == saveFileDialog.ShowDialog())
+            {
+                this.pane.Image.Save(saveFileDialog.FileName, ImageFormat.Png);
+            }
+        }
         #endregion
 
         #region Private voids
@@ -78,11 +94,11 @@ namespace RDM_VISUAL
             // Receivers
             int dim = receivers.GetLength(0), i;
             list.Clear(); for (i = 0; i < dim; i++) list.Add(receivers[i][0], receivers[i][1]);
-            curve = pane.AddCurve("Receiver", list, Color.Blue, SymbolType.Circle);
+            curve = pane.AddCurve("Receiver", list, Color.DarkSlateGray, SymbolType.Circle);
             curve.Line.IsVisible = false;
-            curve.Symbol.Fill.Color = Color.Blue;
+            curve.Symbol.Fill.Color = Color.DarkSlateGray;
             curve.Symbol.Fill.Type = FillType.Solid;
-            curve.Symbol.Size = 20;
+            curve.Symbol.Size = 15;
 
             // Target
             list.Clear(); list.Add(target[0], target[1]);
@@ -90,15 +106,15 @@ namespace RDM_VISUAL
             curve.Line.IsVisible = false;
             curve.Symbol.Fill.Color = Color.Red;
             curve.Symbol.Fill.Type = FillType.Solid;
-            curve.Symbol.Size = 25;
+            curve.Symbol.Size = 20;
 
             // RDM solution
             list.Clear(); list.Add(solution[0], solution[1]);
             curve = pane.AddCurve("RDM", list, Color.Black, SymbolType.Circle);
             curve.Line.IsVisible = false;
-            curve.Symbol.Fill.Color = Color.Yellow;
+            curve.Symbol.Fill.Color = Color.LightGray;
             curve.Symbol.Fill.Type = FillType.Solid;
-            curve.Symbol.Size = 32;
+            curve.Symbol.Size = 30;
 
             // Distances
             if (checkBox2.Checked)
@@ -110,7 +126,7 @@ namespace RDM_VISUAL
                     list.Add(target[0], target[1]);
                     curve = pane.AddCurve("", list, Color.Gray, SymbolType.None);
                     curve.Line.Style = DashStyle.Dash;
-                    curve.Line.Width = 2;
+                    curve.Line.Width = 3;
                 }
             }
 
