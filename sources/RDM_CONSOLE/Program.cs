@@ -7,21 +7,25 @@ namespace RDM_CONSOLE
 {
     class Program
     {
+        #region Private data
+        static double[] X = new double[] { 80, 20, 100 };
+        static double[] S = new double[] { 700, 800, 500 };
+        static double sigma = 0.5;
+        static int count = 4;
+        #endregion
+
+        #region Main
         static void Main()
         {
             // Initialize
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             // Conversion from geodetic coordinates to Cartesian
-            double[] X = new double[] { 80, 20, 100 };
             ConsoleHelper.Disp(X, "Target (Geodetic): ", "\n");
             double[] Y = Navigation.FromGeodetic(X);
             ConsoleHelper.Disp(Y, "Target (Cartesian): ", "\n");
-            double[] S = new double[] { 700, 800, 500 };
             ConsoleHelper.Disp(S, "Scaling (Cartesian): ", "\n");
-            double sigma = 0.5;
             ConsoleHelper.Disp(sigma, "Sigma: ", "\n");
-            int count = 4;
             ConsoleHelper.Disp(count, "Receivers count: ");
 
             // Computing receivers and time difference
@@ -43,5 +47,6 @@ namespace RDM_CONSOLE
             ConsoleHelper.Disp(Z, "RDM (Geodetic): ");
             Console.ReadKey();
         }
+        #endregion
     }
 }

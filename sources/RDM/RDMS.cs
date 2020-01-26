@@ -198,7 +198,7 @@ namespace RDM
             int length = S.Length;
             bool b = true;
 
-            for (int i = 0; i < length - 1; i++)
+            for (int i = 0; i < length; i++)
             {
                 if (Math.Abs(S[i]) > eps)
                 {
@@ -305,6 +305,7 @@ namespace RDM
                 F[i] = -(dF + dP);
             }
 
+            // unstable point
             F[count - 1] = -1.0 / rk;
             return F;
         }
