@@ -52,7 +52,7 @@ namespace RDM
         /// <summary>
         /// Solves the navigation problem by the range-difference method.
         /// </summary>
-        /// <param name="receivers">Matrix of five receivers</param>
+        /// <param name="receivers">Matrix of vectors { X, Y, Z }</param>
         /// <param name="time">Vector of time</param>
         /// <returns>Vector { X, Y, Z }</returns>
         public double[] Solve(double[][] receivers, double[] time)
@@ -83,7 +83,7 @@ namespace RDM
         /// <summary>
         /// Solves the navigation problem by the range-difference method.
         /// </summary>
-        /// <param name="receivers">Matrix of five receivers</param>
+        /// <param name="receivers">Matrix of vectors { X, Y, Z }</param>
         /// <param name="time">Matrix of time</param>
         /// <param name="parallel">Parallel or not</param>
         /// <returns>Vector { X, Y, Z }</returns>
@@ -214,7 +214,7 @@ namespace RDM
         /// <summary>
         /// Returns a matrix "A" of a system of linear algebraic equations: "Ax = b".
         /// </summary>
-        /// <param name="A">Matrix of </param>
+        /// <param name="A">Matrix of vectors { X, Y, Z }</param>
         /// <param name="T">Vector of time</param>
         /// <param name="Rk">Current solution</param>
         /// <returns>Matrix</returns>
@@ -258,7 +258,7 @@ namespace RDM
         /// <summary>
         /// Returns a vector "b" of a system of linear algebraic equations: "Ax = b".
         /// </summary>
-        /// <param name="A">Matrix of the multi-positioning of five receiving points</param>
+        /// <param name="A">Matrix of vectors { X, Y, Z }</param>
         /// <param name="T">Vector of time</param>
         /// <param name="Rk">Current solution</param>
         /// <returns>Vector</returns>
@@ -311,7 +311,7 @@ namespace RDM
         /// <summary>
         /// Returns a matrix "A" of a system of linear algebraic equations: "Ax = b".
         /// </summary>
-        /// <param name="A">Matrix of </param>
+        /// <param name="A">Matrix of vectors { X, Y, Z }</param>
         /// <param name="T">Vector of time</param>
         /// <returns>Matrix</returns>
         private static double[][] Left(double[][] A, double[] T)
@@ -341,7 +341,7 @@ namespace RDM
         /// <summary>
         /// Returns a vector "b" of a system of linear algebraic equations: "Ax = b".
         /// </summary>
-        /// <param name="A">Matrix of the multi-positioning of five receiving points</param>
+        /// <param name="A">Matrix of vectors { X, Y, Z }</param>
         /// <param name="T">Vector of time</param>
         /// <returns>Vector</returns>
         private static double[] Right(double[][] A, double[] T)
