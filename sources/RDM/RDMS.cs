@@ -142,7 +142,7 @@ namespace RDM
         /// <summary>
         /// Solves the navigation problem by the range-difference method (linear method).
         /// </summary>
-        /// <param name="A">Matrix of five receivers</param>
+        /// <param name="A">Matrix of vectors { X, Y, Z }</param>
         /// <param name="T">Vector of time</param>
         /// <returns>Vector { X, Y, Z }</returns>
         private static double[] RDM5(double[][] A, double[] T)
@@ -158,7 +158,7 @@ namespace RDM
         /// <summary>
         /// Solves the navigation problem by the range-difference method (nonlinear method).
         /// </summary>
-        /// <param name="A">Matrix</param>
+        /// <param name="A">Matrix of vectors { X, Y, Z }</param>
         /// <param name="T">Vector of time</param>
         /// <returns>Vector { X, Y, Z }</returns>
         /// <param name="eps">Epsilon (0, 1)</param>
@@ -531,7 +531,7 @@ namespace RDM
         /// <summary>
         /// Returns minimum and maximum vectors.
         /// </summary>
-        /// <param name="receivers">Matrix of five receivers</param>
+        /// <param name="receivers">Matrix of vectors { X, Y, Z }</param>
         /// <param name="min">Minimum vector { X, Y, Z }</param>
         /// <param name="max">Maximum vector { X, Y, Z }></param>
         private static void GetExtremum(double[][] receivers, out double[] min, out double[] max)
