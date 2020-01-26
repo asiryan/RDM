@@ -23,7 +23,7 @@ namespace RDM_VISUAL
         double[][] A;
         double[]   R;
         double sigma = 0.5;
-        int count = 4;
+        int count = 3;
         #endregion
 
         #region Form methods

@@ -15,9 +15,9 @@ namespace RDM_CONSOLE
             // Conversion from geodetic coordinates to Cartesian
             double[] X = new double[] { 80, 20, 100 };
             ConsoleHelper.Disp(X, "Target (Geodetic): ", "\n");
-            double[] Y = Coordinates.FromGeodetic(X);
+            double[] Y = Navigation.FromGeodetic(X);
             ConsoleHelper.Disp(Y, "Target (Cartesian): ", "\n");
-            double[] S = Vector.Random(3, 500, 1000);
+            double[] S = new double[] { 700, 800, 500 };
             ConsoleHelper.Disp(S, "Scaling (Cartesian): ", "\n");
             double sigma = 0.5;
             ConsoleHelper.Disp(sigma, "Sigma: ", "\n");
@@ -39,7 +39,7 @@ namespace RDM_CONSOLE
             ConsoleHelper.Disp(Vector.Loss(R, Y), "Loss: ");
 
             // Backward conversion to geodetic coordinates
-            double[] Z = Coordinates.ToGeodetic(R);
+            double[] Z = Navigation.ToGeodetic(R);
             ConsoleHelper.Disp(Z, "RDM (Geodetic): ");
             Console.ReadKey();
         }

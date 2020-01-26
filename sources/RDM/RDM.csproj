@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinates.cs" />
+    <Compile Include="Navigation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RDMS.cs" />
     <Compile Include="Vector.cs" />

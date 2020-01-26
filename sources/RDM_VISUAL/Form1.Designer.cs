@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.z1 = new ZedGraph.ZedGraphControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label4 = new System.Windows.Forms.Label();
@@ -39,10 +41,8 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
@@ -81,6 +81,28 @@
             this.panel1.Size = new System.Drawing.Size(274, 426);
             this.panel1.TabIndex = 2;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(235, 114);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(24, 15);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "0.5";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(235, 152);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(14, 15);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "3";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -94,12 +116,12 @@
             // trackBar1
             // 
             this.trackBar1.Location = new System.Drawing.Point(97, 133);
-            this.trackBar1.Minimum = 4;
+            this.trackBar1.Minimum = 3;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(152, 45);
             this.trackBar1.TabIndex = 9;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar1.Value = 4;
+            this.trackBar1.Value = 3;
             this.trackBar1.Scroll += new System.EventHandler(this.TrackBar1_Scroll);
             // 
             // label4
@@ -167,6 +189,17 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
             // 
+            // trackBar2
+            // 
+            this.trackBar2.Location = new System.Drawing.Point(97, 95);
+            this.trackBar2.Maximum = 100;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(152, 45);
+            this.trackBar2.TabIndex = 11;
+            this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar2.Value = 50;
+            this.trackBar2.Scroll += new System.EventHandler(this.TrackBar2_Scroll);
+            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -178,39 +211,6 @@
             this.button1.Text = "Generate";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(235, 152);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(14, 15);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "4";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(235, 114);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(24, 15);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "0.5";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Location = new System.Drawing.Point(97, 95);
-            this.trackBar2.Maximum = 100;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(152, 45);
-            this.trackBar2.TabIndex = 11;
-            this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar2.Value = 50;
-            this.trackBar2.Scroll += new System.EventHandler(this.TrackBar2_Scroll);
             // 
             // Form1
             // 

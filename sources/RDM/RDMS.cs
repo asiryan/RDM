@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace RDM
 {
@@ -8,10 +9,6 @@ namespace RDM
     public class RDMS
     {
         #region Private data
-        /// <summary>
-        /// Speed of light.
-        /// </summary>
-        public const double C = 299792458;
         /// <summary>
         /// Epsilon (0, 1).
         /// </summary>
@@ -65,9 +62,9 @@ namespace RDM
             if (length < 2)
                 throw new Exception("Number of receivers must be greater than 1");
             else if (length < 5)
-                return RDM4(receivers, time, this.eps);
+                return RDMS.RDM4(receivers, time, this.eps);
             else if (length == 5)
-                return RDM5(receivers, time);
+                return RDMS.RDM5(receivers, time);
             else
             {
                 int dim = 5;
@@ -80,8 +77,37 @@ namespace RDM
                     timerp[i] = time[i];
                 }
 
-                return RDM5(receivers, time);
+                return RDMS.RDM5(packet, timerp);
             }
+        }
+        /// <summary>
+        /// Solves the navigation problem by the range-difference method.
+        /// </summary>
+        /// <param name="receivers">Matrix of five receivers</param>
+        /// <param name="time">Matrix of time</param>
+        /// <param name="parallel">Parallel or not</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public double[][] Solve(double[][] receivers, double[][] time, bool parallel = false)
+        {
+            int count = time.Length;
+            double[][] targets = new double[count][];
+            
+            if (parallel)
+            {
+                Parallel.For(0, count, i =>
+                {
+                    targets[i] = this.Solve(receivers, time[i]);
+                });
+            }
+            else
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    targets[i] = this.Solve(receivers, time[i]);
+                }
+            }
+
+            return targets;
         }
         #endregion
 
@@ -154,7 +180,7 @@ namespace RDM
                 V = Vector.Add(V, S);
 
                 // Stop point
-                if (Convergence(S, eps))
+                if (RDMS.Convergence(S, eps))
                     break;
             }
 
@@ -217,7 +243,7 @@ namespace RDM
                     H[i][j] = R[i + 1][j] - R[0][j];
                 }
 
-                H[i][count - 1] = RDMS.C * (T[i + 1] - T[0]);
+                H[i][count - 1] = Navigation.C * (T[i + 1] - T[0]);
             }
 
             H[count - 1] = new double[count];
@@ -246,7 +272,7 @@ namespace RDM
             for (int i = 0; i < count; i++)
             {
                 R[i] = Vector.Resize(A[i], count - 1);
-                P[i] = Math.Pow(Vector.Abs(R[i]), 2);
+                P[i] = Vector.Abs(R[i], true);
             }
 
             // time delays
@@ -254,7 +280,7 @@ namespace RDM
 
             for (int i = 0; i < count - 1; i++)
             {
-                dT[i] = RDMS.C * (T[i + 1] - T[0]);
+                dT[i] = Navigation.C * (T[i + 1] - T[0]);
             }
 
             // distance
@@ -308,7 +334,7 @@ namespace RDM
                     H[i][j] = R[0][j] - R[i + 1][j];
                 }
 
-                H[i][count - 2] = -RDMS.C * (T[0] - T[i + 1]);
+                H[i][count - 2] = -Navigation.C * (T[0] - T[i + 1]);
             }
             return H;
         }
@@ -337,7 +363,7 @@ namespace RDM
             // compute matrix
             for (int i = 0; i < count - 1; i++)
             {
-                dT[i] = RDMS.C * (T[i + 1] - T[0]);
+                dT[i] = Navigation.C * (T[i + 1] - T[0]);
             }
 
             for (int i = 0; i < count - 1; i++)
@@ -349,7 +375,7 @@ namespace RDM
         }
         #endregion
 
-        #region Generative methods
+        #region Random model
         /// <summary>
         /// Returns a matrix of receive points.
         /// </summary>
@@ -357,51 +383,166 @@ namespace RDM
         /// <param name="scaling">Scaling vector { X, Y, Z }</param>
         /// <param name="sigma">Standard deviation</param>
         /// <param name="count">Number of receivers (>1)</param>
-        /// <returns>Matrix</returns>
-        public static double[][] GetReceiver(double[] vector, double[] scaling, double sigma = 0.5, int count = 5)
+        /// <returns>Matrix of vectors { X, Y, Z }</returns>
+        public static double[][] GetReceiver(double[] vector, double[] scaling, double sigma, int count)
         {
-            // params
-            double X = vector[0];
-            double Y = vector[1];
-            double Z = vector[2];
-
-            double dx = scaling[0];
-            double dy = scaling[1];
-            double dz = scaling[2];
-
             // compute
             double[][] R = new double[count][];
-            double r0;
-            double r1;
-            double r2;
 
             for (int i = 0; i < count; i++)
             {
-                r0 = 2 * (rand.NextDouble() - 0.5);
-                r1 = 2 * (rand.NextDouble() - 0.5);
-                r2 = rand.NextDouble();
-
-                R[i] = new double[] { X - dx * r0, Y - dy * r1, Z - dz * r2 };
+                R[i] = RDMS.GetReceiver(vector, scaling, sigma);
             }
 
             return R;
         }
         /// <summary>
-        /// Returns a target vector.
+        /// Returns a vector of receiver point.
         /// </summary>
-        /// <param name="receivers">Matrix of five receivers</param>
+        /// <param name="vector">Vector { X, Y, Z }</param>
+        /// <param name="scaling">Scaling vector { X, Y, Z }</param>
         /// <param name="sigma">Standard deviation</param>
         /// <returns>Vector { X, Y, Z }</returns>
-        public static double[] GetTarget(double[][] receivers, double sigma = 0.5)
+        public static double[] GetReceiver(double[] vector, double[] scaling, double sigma)
+        {
+            // compute
+            double r0 = 2 * (rand.NextDouble() - 0.5);
+            double r1 = 2 * (rand.NextDouble() - 0.5);
+            double r2 = rand.NextDouble();
+
+            return new double[] {
+                vector[0] - scaling[0] * r0,
+                vector[1] - scaling[1] * r1,
+                vector[2] - scaling[2] * r2 };
+        }
+
+        /// <summary>
+        /// Returns a target vector.
+        /// </summary>
+        /// <param name="receivers">Matrix of vectors { X, Y, Z }</param>
+        /// <param name="sigma">Standard deviation</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] GetTarget(double[][] receivers, double sigma)
+        {
+            double[] max, min;
+            RDMS.GetExtremum(receivers, out min, out max);
+            return RDMS.GetTarget(min, max, sigma);
+        }
+        /// <summary>
+        /// Returns a target vector.
+        /// </summary>
+        /// <param name="receivers">Matrix of vectors { X, Y, Z }</param>
+        /// <param name="sigma">Standard deviation</param>
+        /// <param name="count">Number of targets</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[][] GetTarget(double[][] receivers, double sigma, int count)
+        {
+            double[] max, min;
+            RDMS.GetExtremum(receivers, out min, out max);
+
+            double[][] targets = new double[count][];
+
+            for (int i = 0; i < count; i++)
+            {
+                targets[i] = RDMS.GetTarget(min, max, sigma);
+            }
+
+            return targets;
+        }
+
+        /// <summary>
+        /// Returns the propagation time of a wave between two points.
+        /// </summary>
+        /// <param name="a">First vector { X, Y, Z }</param>
+        /// <param name="b">Second vector { X, Y, Z }</param>
+        /// <returns>Value</returns>
+        public static double GetTime(double[] a, double[] b)
+        {
+            return Vector.Distance(a, b) / Navigation.C;
+        }
+        /// <summary>
+        /// Returns the propagation time of a wave between matrix of receivers and target vector.
+        /// </summary>
+        /// <param name="receivers">Matrix of vectors { X, Y, Z }</param>
+        /// <param name="vector">Vector { X, Y, Z }</param>
+        /// <returns>Vector { T0, T1, T2, T3 }</returns>
+        public static double[] GetTime(double[][] receivers, double[] vector)
+        {
+            int length = receivers.GetLength(0);
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = RDMS.GetTime(receivers[i], vector);
+            }
+
+            return c;
+        }
+        /// <summary>
+        /// Returns the propagation time of a wave between matrix of receivers and target vector.
+        /// </summary>
+        /// <param name="receivers">Matrix of vectors { X, Y, Z }</param>
+        /// <param name="vector">Vector { X, Y, Z }</param>
+        /// <returns>Vector { T0, T1, T2, T3 }</returns>
+        public static double[][] GetTime(double[][] receivers, double[][] vector)
+        {
+            int count = vector.GetLength(0);
+            int length = receivers.GetLength(0);
+            double[][] c = new double[count][];
+
+            for (int i = 0; i < count; i++)
+            {
+                c[i] = new double[length];
+
+                for (int j = 0; j < length; j++)
+                {
+                    c[i][j] = RDMS.GetTime(receivers[j], vector[i]);
+                }
+            }
+
+            return c;
+        }
+        #endregion
+
+        #region Private voids
+        /// <summary>
+        /// Returns a target vector.
+        /// </summary>
+        /// <param name="min">Minimum vector { X, Y, Z }</param>
+        /// <param name="max">Maximum vector { X, Y, Z }</param>
+        /// <param name="sigma">Standard deviation</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        private static double[] GetTarget(double[] min, double[] max, double sigma)
         {
             // params
-            int dim = 3, i, j;
-            int length = receivers.GetLength(0);
-            double[] tar = new double[3];
-            double[] max = new double[3];
-            double[] min = new double[3];
-            double[] a;
+            int length = min.Length, j;
+            double[] t = new double[length];
             double r;
+
+            // randomize
+            for (j = 0; j < length; j++)
+            {
+                r = 2.0 * (rand.NextDouble() - 0.5);
+                t[j] = (max[j] - min[j]) * r * sigma + min[j] + (max[j] - min[j]) / 2.0;
+            }
+
+            return t;
+        }
+        /// <summary>
+        /// Returns minimum and maximum vectors.
+        /// </summary>
+        /// <param name="receivers">Matrix of five receivers</param>
+        /// <param name="min">Minimum vector { X, Y, Z }</param>
+        /// <param name="max">Maximum vector { X, Y, Z }></param>
+        private static void GetExtremum(double[][] receivers, out double[] min, out double[] max)
+        {
+            // params
+            int i, j;
+            int length = receivers.GetLength(0);
+            int dim = receivers[0].GetLength(0); // fixed 3. 
+            max = new double[dim];
+            min = new double[dim];
+            double[] a;
 
             // min/max vectors
             for (i = 0; i < dim; i++)
@@ -422,42 +563,7 @@ namespace RDM
                 }
             }
 
-            // randomize
-            for (j = 0; j < dim; j++)
-            {
-                r = 2.0 * (rand.NextDouble() - 0.5);
-                tar[j] = (max[j] - min[j]) * r * sigma + min[j] + (max[j] - min[j]) / 2.0;
-            }
-
-            return tar;
-        }
-        /// <summary>
-        /// Returns the propagation time of a wave between two points.
-        /// </summary>
-        /// <param name="a">First vector { X, Y, Z }</param>
-        /// <param name="b">Second vector { X, Y, Z }</param>
-        /// <returns>Value</returns>
-        public static double GetTime(double[] a, double[] b)
-        {
-            return Vector.Distance(a, b) / RDMS.C;
-        }
-        /// <summary>
-        /// Returns the propagation time of a wave between mtrix of five receivers and target vector.
-        /// </summary>
-        /// <param name="receivers">Matrix of five receivers</param>
-        /// <param name="vector">Vector { X, Y, Z }</param>
-        /// <returns>Vector { T0, T1, T2, T3 }</returns>
-        public static double[] GetTime(double[][] receivers, double[] vector)
-        {
-            int length = receivers.GetLength(0);
-            double[] c = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                c[i] = RDMS.GetTime(receivers[i], vector);
-            }
-
-            return c;
+            return;
         }
         #endregion
     }

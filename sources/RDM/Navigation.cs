@@ -3,11 +3,15 @@
 namespace RDM
 {
     /// <summary>
-    /// Uses for transformations in 3d coordinates.
+    /// Uses for transformations in navigation systems.
     /// </summary>
-    public static class Coordinates
+    public static class Navigation
     {
         #region Constants
+        /// <summary>
+        /// Speed of light.
+        /// </summary>
+        public const double C = 299792458;
         /// <summary>
         /// Major axis of an ellipsoid.
         /// </summary>
@@ -91,7 +95,7 @@ namespace RDM
             if (vector.Length != 3)
                 throw new Exception("Invalid vector format");
 
-            return Coordinates.FromGeodetic(vector[0], vector[1], vector[2], radians);
+            return Navigation.FromGeodetic(vector[0], vector[1], vector[2], radians);
         }
         /// <summary>
         /// Converts Cartesian coordinates to geodetic coordinates.
@@ -205,7 +209,7 @@ namespace RDM
             if (vector.Length != 3)
                 throw new Exception("Invalid vector format");
 
-            return Coordinates.ToGeodetic(vector[0], vector[1], vector[2], radians);
+            return Navigation.ToGeodetic(vector[0], vector[1], vector[2], radians);
         }
         #endregion
 
@@ -245,7 +249,7 @@ namespace RDM
             if (vector.Length != 3)
                 throw new Exception("Invalid vector format");
 
-            return Coordinates.ToCylindrical(vector[0], vector[1], vector[2], radians);
+            return Navigation.ToCylindrical(vector[0], vector[1], vector[2], radians);
         }
         /// <summary>
         /// Converts Cartesian coordinates to cylindrical coordinates.
@@ -286,7 +290,7 @@ namespace RDM
             if (vector.Length != 3)
                 throw new Exception("Invalid vector format");
 
-            return Coordinates.FromCylindrical(vector[0], vector[1], vector[2], radians);
+            return Navigation.FromCylindrical(vector[0], vector[1], vector[2], radians);
         }
         #endregion
 
@@ -327,7 +331,7 @@ namespace RDM
             if (vector.Length != 3)
                 throw new Exception("Invalid vector format");
 
-            return Coordinates.ToSpherical(vector[0], vector[1], vector[2], radians);
+            return Navigation.ToSpherical(vector[0], vector[1], vector[2], radians);
         }
         /// <summary>
         /// Converts Cartesian coordinates to spherical coordinates.
@@ -371,7 +375,7 @@ namespace RDM
             if (vector.Length != 3)
                 throw new Exception("Invalid vector format");
 
-            return Coordinates.FromSpherical(vector[0], vector[1], vector[2], radians);
+            return Navigation.FromSpherical(vector[0], vector[1], vector[2], radians);
         }
         #endregion
 

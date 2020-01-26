@@ -12,18 +12,77 @@ namespace RDM
         /// Returns vector module.
         /// </summary>
         /// <param name="vector">Vector { X, Y, Z }</param>
+        /// <param name="squared">Squared or not</param>
         /// <returns>Value</returns>
-        public static double Abs(double[] vector)
+        public static double Abs(double[] vector, bool squared = false)
         {
             int length = vector.Length;
             double r = 0;
 
-            for (int i = 0; i < vector.Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 r += vector[i] * vector[i];
             }
 
+            if (squared)
+                return r;
+
             return Math.Sqrt(r);
+        }
+        /// <summary>
+        /// Returns matrix module.
+        /// </summary>
+        /// <param name="matrix">Matrix of vectors { X, Y, Z }</param>
+        /// <param name="squared">Squared or not</param>
+        /// <returns>vector { X, Y, Z }</returns>
+        public static double[] Abs(double[][] matrix, bool squared = false)
+        {
+            int length = matrix.Length;
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Abs(matrix[i], squared);
+            }
+
+            return c;
+        }
+        #endregion
+
+        #region Summary function
+        /// <summary>
+        /// Returns sum of vector.
+        /// </summary>
+        /// <param name="vector">Vector { X, Y, Z }</param>
+        /// <returns>Value</returns>
+        public static double Sum(double[] vector)
+        {
+            int length = vector.Length;
+            double r = 0;
+
+            for (int i = 0; i < length; i++)
+            {
+                r += vector[i];
+            }
+
+            return r;
+        }
+        /// <summary>
+        /// Returns sum of matrix.
+        /// </summary>
+        /// <param name="matrix">Matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Sum(double[][] matrix)
+        {
+            int length = matrix.Length;
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Sum(matrix[i]);
+            }
+
+            return c;
         }
         #endregion
 
@@ -46,6 +105,25 @@ namespace RDM
             return c;
         }
         /// <summary>
+        /// Returns summary of two matrices.
+        /// </summary>
+        /// <param name="a">First matrix of vectors { X, Y, Z }</param>
+        /// <param name="b">Second matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[][] Add(double[][] a, double[][] b)
+        {
+            int length = a.Length;
+            double[][] c = new double[length][];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Add(a[i], b[i]);
+            }
+
+            return c;
+        }
+
+        /// <summary>
         /// Returns difference of two vectors.
         /// </summary>
         /// <param name="a">First vector { X, Y, Z }</param>
@@ -60,6 +138,24 @@ namespace RDM
             {
                 c[i] = a[i] - b[i];
             }
+            return c;
+        }
+        /// <summary>
+        /// Returns difference of two matrices.
+        /// </summary>
+        /// <param name="a">First matrix of vectors { X, Y, Z }</param>
+        /// <param name="b">Second matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[][] Sub(double[][] a, double[][] b)
+        {
+            int length = a.Length;
+            double[][] c = new double[length][];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Sub(a[i], b[i]);
+            }
+
             return c;
         }
         #endregion
@@ -84,6 +180,24 @@ namespace RDM
             return s;
         }
         /// <summary>
+        /// Returns loss function of two matrices.
+        /// </summary>
+        /// <param name="a">First matrix of vectors { X, Y, Z }</param>
+        /// <param name="b">Second matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Loss(double[][] a, double[][] b)
+        {
+            int length = a.Length;
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Loss(a[i], b[i]);
+            }
+
+            return c;
+        }
+        /// <summary>
         /// Returns accuracy function of two vectors.
         /// </summary>
         /// <param name="a">First vector { X, Y, Z }</param>
@@ -95,6 +209,24 @@ namespace RDM
 
             if (c > 1.0)
                 return 1.0 / c;
+
+            return c;
+        }
+        /// <summary>
+        /// Returns accuracy function of two matrices.
+        /// </summary>
+        /// <param name="a">First matrix of vectors { X, Y, Z }</param>
+        /// <param name="b">Second matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Accuracy(double[][] a, double[][] b)
+        {
+            int length = a.Length;
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Accuracy(a[i], b[i]);
+            }
 
             return c;
         }
@@ -115,6 +247,24 @@ namespace RDM
                 s += a[i] * b[i];
 
             return s / (A * B);
+        }
+        /// <summary>
+        /// Returns similarity function of two matrices.
+        /// </summary>
+        /// <param name="a">First matrix of vectors { X, Y, Z }</param>
+        /// <param name="b">Second matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Similarity(double[][] a, double[][] b)
+        {
+            int length = a.Length;
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Similarity(a[i], b[i]);
+            }
+
+            return c;
         }
         #endregion
 
@@ -137,6 +287,50 @@ namespace RDM
 
             return c;
         }
+        /// <summary>
+        /// Returns mean matrix of two matrices.
+        /// </summary>
+        /// <param name="a">First matrix of vectors { X, Y, Z }</param>
+        /// <param name="b">Second matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[][] Mean(double[][] a, double[][] b)
+        {
+            int length = a.Length;
+            double[][] c = new double[length][];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Mean(a[i], b[i]);
+            }
+
+            return c;
+        }
+        /// <summary>
+        /// Returns mean value of vector.
+        /// </summary>
+        /// <param name="vector">First vector { X, Y, Z }</param>
+        /// <returns>Value</returns>
+        public static double Mean(double[] vector)
+        {
+            return Vector.Sum(vector) / (double)vector.Length;
+        }
+        /// <summary>
+        /// Returns mean value of matrix.
+        /// </summary>
+        /// <param name="matrix">Matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Mean(double[][] matrix)
+        {
+            int length = matrix.Length;
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Mean(matrix[i]);
+            }
+
+            return c;
+        }
         #endregion
 
         #region Distance functions
@@ -152,19 +346,37 @@ namespace RDM
             return Vector.Abs(c);
         }
         /// <summary>
-        /// Returns distances between matrix and vector.
+        /// Returns distance between two matrices.
         /// </summary>
-        /// <param name="A">Matrix</param>
-        /// <param name="vector">Vector { X, Y, Z }</param>
-        /// <returns>Vector { r0, r1, r2, r3 }</returns>
-        public static double[] Distance(double[][] A, double[] vector)
+        /// <param name="a">First matrix of vectors { X, Y, Z }</param>
+        /// <param name="b">Second matrix of vectors { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Distance(double[][] a, double[][] b)
         {
-            int length = A.GetLength(0);
+            int length = a.Length;
             double[] c = new double[length];
 
             for (int i = 0; i < length; i++)
             {
-                c[i] = Vector.Distance(A[i], vector);
+                c[i] = Vector.Distance(a[i], b[i]);
+            }
+
+            return c;
+        }
+        /// <summary>
+        /// Returns distances between matrix and vector.
+        /// </summary>
+        /// <param name="matrix">Matrix of vectors { X, Y, Z }</param>
+        /// <param name="vector">Vector { X, Y, Z }</param>
+        /// <returns>Vector { X, Y, Z }</returns>
+        public static double[] Distance(double[][] matrix, double[] vector)
+        {
+            int length = matrix.GetLength(0);
+            double[] c = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                c[i] = Vector.Distance(matrix[i], vector);
             }
 
             return c;
@@ -175,59 +387,36 @@ namespace RDM
         /// <summary>
         /// Resizes a vector.
         /// </summary>
-        /// <param name="a">First vector { X, Y, Z }</param>
+        /// <param name="vector">Vector { X, Y, Z }</param>
         /// <param name="length">Length</param>
         /// <returns>Value</returns>
-        public static double[] Resize(double[] a, int length)
+        public static double[] Resize(double[] vector, int length)
         {
-            int r0 = Math.Min(a.GetLength(0), length);
+            int r0 = Math.Min(vector.GetLength(0), length);
             double[] c = new double[length];
 
             for (int i = 0; i < r0; i++)
-                c[i] = a[i];
+                c[i] = vector[i];
 
             return c;
         }
-        #endregion
-
-        #region Random function
         /// <summary>
-        /// Random generator.
+        /// Resizes a matrix.
         /// </summary>
-        private static Random rand = new Random();
-        /// <summary>
-        /// Returns random integer vector.
-        /// </summary>
+        /// <param name="matrix">Matrix of vectors { X, Y, Z }</param>
         /// <param name="length">Length</param>
-        /// <param name="min">Minimum value</param>
-        /// <param name="max">Maxmimum value</param>
-        /// <returns>Vector { X, Y, Z }</returns>
-        public static double[] Random(int length, int min, int max)
+        /// <returns>Value</returns>
+        public static double[][] Resize(double[][] matrix, int length)
         {
-            double[] v = new double[length];
+            int length0 = matrix.Length;
+            double[][] c = new double[length0][];
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < length0; i++)
             {
-                v[i] = rand.Next(min, max);
+                c[i] = Vector.Resize(matrix[i], length);
             }
 
-            return v;
-        }
-        /// <summary>
-        /// Returns random double vector.
-        /// </summary>
-        /// <param name="length">Length</param>
-        /// <returns>Vector { X, Y, Z }</returns>
-        public static double[] Random(int length)
-        {
-            double[] v = new double[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                v[i] = rand.NextDouble();
-            }
-
-            return v;
+            return c;
         }
         #endregion
 
