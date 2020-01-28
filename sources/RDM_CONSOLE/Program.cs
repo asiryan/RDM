@@ -11,7 +11,7 @@ namespace RDM_CONSOLE
         static double[] X = new double[] { 80, 20, 100 };
         static double[] S = new double[] { 700, 800, 500 };
         static double sigma = 0.5;
-        static int count = 4;
+        static int count = 3;
         #endregion
 
         #region Main

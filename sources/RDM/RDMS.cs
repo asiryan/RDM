@@ -409,12 +409,12 @@ namespace RDM
             // compute
             double r0 = 2 * (rand.NextDouble() - 0.5);
             double r1 = 2 * (rand.NextDouble() - 0.5);
-            double r2 = rand.NextDouble();
+            double r2 = 2 * (rand.NextDouble() - 0.5);
 
             return new double[] {
-                vector[0] - scaling[0] * r0,
-                vector[1] - scaling[1] * r1,
-                vector[2] - scaling[2] * r2 };
+                vector[0] - scaling[0] * r0 * sigma,
+                vector[1] - scaling[1] * r1 * sigma,
+                vector[2] - scaling[2] * r2 * sigma};
         }
 
         /// <summary>
