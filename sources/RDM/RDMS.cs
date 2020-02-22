@@ -153,7 +153,7 @@ namespace RDM
             double[] S = Vector.Solve(B, F);
 
             // Vector { X, Y, Z }
-            return new double[] { S[0], S[1], S[2] };
+            return Vector.Resize(S, 3);
         }
         /// <summary>
         /// Solves the navigation problem by the range-difference method (nonlinear method).
