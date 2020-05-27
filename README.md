@@ -54,7 +54,7 @@ Double click on the graph and save the image.
 <p align="center"><b>Figure 2.</b> Saved graph image</p>  
 
 # License
-**GNU GPL v3.0**  
+**MIT License**  
 
 # References
 [1] **I.V. Grin, R.A. Ershov, O.A. Morozov, V.R. Fidelman** - Evaluation of radio source’s coordinates based on solution of linearized system of equations by range-difference method ([***pdf***](https://cyberleninka.ru/article/n/otsenka-koordinat-istochnika-radioizlucheniya-na-osnove-resheniya-linearizovannoy-sistemy-uravneniy-raznostno-dalnomernogo-metoda/pdf)).  
